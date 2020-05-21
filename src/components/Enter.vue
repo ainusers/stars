@@ -1,132 +1,55 @@
 <template>
-  <div id="container">
-    <div class="header">
-      <div class="logo logo-text">在线陪聊</div>
-    </div>
-    <div class="main">
-      <div class="lside">
-        <div class="chat-box">
-          <div class="jspScrollable" tabindex="0">
-            <div class="jspContainer">
-              <div class="jspPane" id="jspPane">
-                <div class="rctCtn chtCtn lft" >
-                  <div class="chtMsg chtMsg-greeting">
-                    <div id="talk">
-                      <div class="robot">
-                        <div class="chat">
-                          <div class="robot-icon"></div>
-                          <div class="robot-response">
-                            <div class="robot-chat">
-                              主人你好，有什么需要吗？
-                            </div>
-                          </div>
-                          <span class="robot-talk-cor"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <a id="msg_end" name="1" href="#1"> </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="container"></div>
 
-        <div class="hot-number">
-          热门问题：
-          <div id="ecs" class="hot-item">ecs</div>
-          <div id="yuming" class="hot-item">域名</div>
-          <div id="beian" class="hot-item">备案</div>
-          <div id="youxiang" class="hot-item">邮箱</div>
-        </div>
+  <!--展示信息-->
+  <!--<div style="margin: 0 auto">
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span><br/>
+    <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  </div>-->
 
-        <div class="ask-area">
-          <div class="input-area">
-            <ul class="input-tip">
-              <textarea v-model="searchValue" id="search" autocomplete="off" disableautocomplete placeholder="主人，您有什么想问的吗？" autofocus></textarea>
-            </ul>
-          </div>
-          <button class="send-btn" @click="sendMessage(searchValue)">
-            发送
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <!-- 引入外部样式css -->
 <style scoped>
   @import '../assets/enter/css/enter.css';
 </style>
-<!-- 引入外部样式js -->
 <script>
-  import '../assets/enter/js/enter.js';
   export default {
     data() {
       return {
         searchValue: ''
       }
     },
-    methods:{
-      sendMessage(str) {
-        if(str=="") return
-        //添加信息
-        document.getElementById('talk').innerHTML += `<div class="me" style="clear: both">
-                                                    <div class="i-talk">
-                                                        <div class="me-chat">我</div>
-                                                        <div class="content">${str}</div>
-                                                        <span class="i-talk-cor"></span>
-                                                    </div>
-                                                </div>`;
-        //清空输入框
-        document.getElementById('search').value = '';
-        let xmlHttp = this.GetXmlHttpObject()
-        if (xmlHttp == null) {
-          alert("恭喜您，您的浏览器不支持ajax！");
-          return;
+    methods: {
+      //网站运行时间
+      createtime() {
+        let now = new Date();
+        var grt = new Date("08/26/2017 16:42:38");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+          hnum = "0" + hnum;
         }
-        let url = "http://www.tuling123.com/openapi/api?key=00af5f988608401fa2d4030958f046ae";
-        url = url + "&info=" + str;
-        url = url + "&userid=1234";
-        xmlHttp.onreadystatechange = stateChanged();
-        xmlHttp.open("GET", url, true);
-        xmlHttp.send(null);
-
-        function stateChanged(){
-          if(xmlHttp.readyState==4){
-            var msg=eval('('+xmlHttp.responseText+')');
-            document.getElementById('talk').innerHTML += `<div class="robot" style="clear: both">
-                                                            <div class="chat">
-                                                                <div class="robot-icon" style="width:46px;height: 46px;"></div>
-                                                                <div class="robot-response">
-                                                                    <div class="robot-chat">
-                                                                        ${msg.text}
-                                                                    </div>
-                                                                </div>
-                                                                <span class="robot-talk-cor"></span>
-                                                            </div>
-                                                        </div>`;
-          }
-          document.getElementById("msg_end").click();
-          document.getElementById('search').focus();
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+          mnum = "0" + mnum;
         }
-      },
-      GetXmlHttpObject(){
-        let xmlHttp=null;
-        try{
-          xmlHttp=new XMLHttpRequest();
-        }catch(e){
-          try{
-            xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-          }catch(e){
-            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-          }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+          snum = "0" + snum;
         }
-        return xmlHttp;
+        document.getElementById("timeDate").innerHTML = "感谢您的支持,本站安全运行" + dnum + "天";
+        document.getElementById("times").innerHTML = hnum + "小时" + mnum + "分" + snum + "秒";
       }
+      // setInterval("createtime()",250);
     }
   }
 </script>
+<!--<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>-->
