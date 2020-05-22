@@ -1,55 +1,30 @@
 <template>
-  <div class="container"></div>
-
   <!--展示信息-->
-  <!--<div style="margin: 0 auto">
-    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span><br/>
-    <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-  </div>-->
-
+  <div class="busuanzi">
+    <span id="busuanzi_container_site_pv">
+      本站总访问量
+      <span id="busuanzi_value_site_pv"></span>次
+      <span class="post-meta-divider">|</span>
+    </span>
+    <span id="busuanzi_container_site_uv">
+      本站访客数
+      <span id="busuanzi_value_site_uv"></span>人
+    </span>
+  </div>
 </template>
 
-<!-- 引入外部样式css -->
-<style scoped>
-  @import '../assets/enter/css/enter.css';
-</style>
 <script>
+  let script;
   export default {
-    data() {
-      return {
-        searchValue: ''
-      }
+    mounted() {
+      script = require("busuanzi.pure.js");
     },
-    methods: {
-      //网站运行时间
-      createtime() {
-        let now = new Date();
-        var grt = new Date("08/26/2017 16:42:38");//此处修改你的建站时间或者网站上线时间
-        now.setTime(now.getTime() + 250);
-        days = (now - grt) / 1000 / 60 / 60 / 24;
-        dnum = Math.floor(days);
-        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-        hnum = Math.floor(hours);
-        if (String(hnum).length == 1) {
-          hnum = "0" + hnum;
+    watch: {
+      $route(to, from) {
+        if (to.path != from.path) {
+          script.fetch();
         }
-        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-        mnum = Math.floor(minutes);
-        if (String(mnum).length == 1) {
-          mnum = "0" + mnum;
-        }
-        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-        snum = Math.round(seconds);
-        if (String(snum).length == 1) {
-          snum = "0" + snum;
-        }
-        document.getElementById("timeDate").innerHTML = "感谢您的支持,本站安全运行" + dnum + "天";
-        document.getElementById("times").innerHTML = hnum + "小时" + mnum + "分" + snum + "秒";
       }
-      // setInterval("createtime()",250);
     }
   }
 </script>
-<!--<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>-->
