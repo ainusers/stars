@@ -1,4 +1,5 @@
 <template>
+  <div :style="backgroundImg"></div>
   <!--展示信息-->
   <div class="busuanzi">
     <span id="busuanzi_container_site_pv">
@@ -16,6 +17,18 @@
 <script>
   let script;
   export default {
+    data() {
+      return {
+        backgroundImg: {
+          backgroundImage: "url(" + require("src/assets/enter/image/background.png") + ")",
+          height: '97vh',
+          width: '99vw',
+          backgroundColor: '#fcfce7',
+          backgroundSize: '100% 100%',
+          backgroundRepeat: 'no-repeat',
+        },
+      }
+    },
     mounted() {
       script = require("busuanzi.pure.js");
     },
