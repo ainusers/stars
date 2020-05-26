@@ -1,7 +1,6 @@
 <template>
-  <!--<div :style="backgroundImg"></div>-->
   <!--展示信息-->
-  <div class="count">
+  <div class="count" :style="backgroundImg">
     <span id="busuanzi_container_site_pv">
       本站总访问量
       <span id="busuanzi_value_site_pv"></span>次
@@ -24,10 +23,10 @@
   let script;
   let now = new Date();
   export default {
-    /*data() {
+    data() {
       return {
         backgroundImg: {
-          backgroundImage: "url(" + require("src/assets/enter/image/background.png") + ")",
+          backgroundImage: "url(" + require("../assets/enter/image/background.png") + ")",
           height: '97vh',
           width: '99vw',
           backgroundColor: '#fcfce7',
@@ -35,7 +34,7 @@
           backgroundRepeat: 'no-repeat',
         },
       }
-    },*/
+    },
     mounted() {
       script = require("busuanzi.pure.js");
       setInterval(this.runTime,250);
