@@ -1,6 +1,6 @@
 <template>
-  <!--展示信息-->
   <div class="count" :style="backgroundImg">
+    <!-- 访客统计-->
     <span id="busuanzi_container_site_pv">
       本站总访问量
       <span id="busuanzi_value_site_pv"></span>次
@@ -12,11 +12,32 @@
     </span>
     <br/>
     <span id="busuanzi_date">载入天数...</span><span id="busuanzi_time">载入时分秒...</span>
+
+    <!-- 自写诗词-->
+    <div class="sentence">
+      <span>何弃疗</span><br/>
+      <span>田泳</span><br/>
+      <span>日日门外游，不知所为何。</span><br/>
+      <span>日日空对思，不知为何物。</span><br/>
+      <span>阅尽千百行，沉浮皆有命。</span><br/>
+      <span>若要问前程，春到花自来。</span><br/>
+    </div>
+
+    <!-- 网易云音乐外链-->
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="https://music.163.com/outchain/player?type=2&id=1297802566&auto=1&height=32"></iframe>
   </div>
 </template>
-<style>
+<style scoped>
   .count {
     text-align: center;
+  }
+  .sentence {
+    margin: 25vh 70vw 0 0;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  iframe {
+    visibility: hidden;
   }
 </style>
 <script>
